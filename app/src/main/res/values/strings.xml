@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FastDevTem</string>
+    <string name="init_config_error">初始化配置失败</string>
 </resources>

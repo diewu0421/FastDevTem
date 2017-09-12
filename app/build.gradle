@@ -2,34 +2,113 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 android {
-    compileSdkVersion 25
-    buildToolsVersion "26.0.0"
-    defaultConfig {
-        applicationId "com.epro.fastdevtem"
-        minSdkVersion 15
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+    //自定义打包的名字
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            output.outputFile = new File(
+                    output.outputFile.parent,
+                    //variant.name 为 buildtype的名字 如lixian variant.versionName 为版本名称 如“2.0”
+                    "SmartBusiness-${variant.name}-${variant.versionName}.apk".toLowerCase())
         }
     }
+
+    signingConfigs {
+        debugconfig {
+            keyAlias 'test'
+            keyPassword 'buzhidao'
+            storeFile file('fastdev.jks')
+            storePassword 'buzhidao'
+        }
+        releaseconfig {
+            keyAlias 'test'
+            keyPassword 'buzhidao'
+            storeFile file('fastdev.jks')
+            storePassword 'buzhidao'
+        }
+    }
+
+
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    defaultConfig {
+        applicationId "com.epro.fastdevtem"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+//        解决多Dex的问题
+//        multiDexEnabled true
+
+    }
+//    buildTypes {
+//        release {
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//        }
+//    }
 
     dataBinding{
         enabled true
     }
+
+
+    //解决使用了multidex之后打包出现的各种问题：OutofMemory
+//dexOptions{
+//    preDexLibraries = false
+//    javaMaxHeapSize "2g"
+//}
+
+    sourceSets {
+        main {
+//        manifest.srcFile 'AndroidManifest.xml'
+            jniLibs.srcDirs = ['libs']
+            jni.srcDirs = []
+        }
+
+        // Move the tests to tests/java, tests/res, etc...
+//    instrumentTest.setRoot('tests')
+
+        // Move the build types to build-types/<type>
+        // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
+        // This moves them out of them default location under src/<type>/... which would
+        // conflict with src/ being used by the main source set.
+        // Adding new build types or product flavors should be accompanied
+        // by a similar customization.
+        debug.setRoot('build-types/debug')
+        release.setRoot('build-types/release')
+        lixian.setRoot('build-types/preview')
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.releaseconfig
+            minifyEnabled false
+            proguardFile 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.debugconfig
+            minifyEnabled false
+            proguardFile 'proguard-rules.pro'
+        }
+        preview {
+            signingConfig signingConfigs.releaseconfig
+            minifyEnabled false
+            proguardFile 'proguard-rules.pro'
+        }
+    }
 }
+
+
+
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
+
     testCompile 'junit:junit:4.12'
     //for JVM
     compile 'com.github.kittinunf.fuel:fuel:1.10.0'
@@ -46,6 +125,7 @@ dependencies {
 
     compile 'com.github.bumptech.glide:glide:4.1.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.1.1'
+    //recyclerview适配器
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.26'
 
 }
