@@ -45,6 +45,8 @@ class MainActivity : AppCompatActivity() {
 //        Logger.e("x " + getScreenSize(this).x + " y = " + getScreenSize(this).y)
 
         Log.e("MainActivity", BASE_URL)
+        Logger.e("nihao", "asdfas")
+
         Logger.e("$BASE_URL $count++ ${BuildConfig.DEBUG}")
     }
 }

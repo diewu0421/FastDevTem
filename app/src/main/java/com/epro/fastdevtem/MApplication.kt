@@ -5,6 +5,7 @@ import android.util.Log
 import com.epro.fastdevtem.util.CommonConfig
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
+import com.orhanobut.logger.PrettyFormatStrategy
 
 /**
  * Created by ZLW on 2017/9/12.
@@ -29,7 +30,15 @@ class MApplication : Application(){
     }
 
     private fun initLog() {
-        Logger.addLogAdapter(object : AndroidLogAdapter() {
+
+        val formatStrategy = PrettyFormatStrategy.newBuilder()
+//                .showThreadInfo(false)  // (Optional) Whether to show thread info or not. Default true
+//                .methodCount(0)         // (Optional) How many method line to show. Default 2
+//                .methodOffset(7)        // (Optional) Hides internal method calls up to offset. Default 5
+                .tag("FastDev")   // (Optional) Global tag for every log. Default PRETTY_LOGGER
+                .build()
+
+        Logger.addLogAdapter(object : AndroidLogAdapter(formatStrategy) {
 
             override fun isLoggable(priority: Int, tag: String?): Boolean {
                 Log.e("MApplication","${BuildConfig.DEBUG}")

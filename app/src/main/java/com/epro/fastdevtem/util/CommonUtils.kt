@@ -12,7 +12,7 @@ import android.os.PowerManager
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import java.util.ArrayList
+import java.util.*
 
 /**
  * 工具类
