@@ -1,13 +1,14 @@
 package com.epro.fastdevtem.util
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
+import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
-
 import com.epro.fastdevtem.R
 import com.epro.fastdevtem.widget.CustomDialog
 
@@ -38,33 +39,60 @@ class DialogManager private constructor(builder: Builder) {
         this.hint = builder.hint
     }
 
-    fun showDialog(): DialogManager {
-        var activity = mContext as Activity
-        if (activity.parent != null) {
-            activity = activity.parent
+
+    companion object {
+        fun createDialog(context: Context, layoutId:Int = -1,layoutView:View? = null) :Dialog?{
+            var activity = context as Activity
+            if (activity.parent != null) {
+                activity = activity.parent
+            }
+            if (activity.isFinishing) {
+                return null
+            }else {
+                if (layoutId != -1) {
+                    val view: View = context.layoutInflater.inflate(layoutId, null)
+                    return CustomDialog(context, 0, 0, view, R.style.DialogTheme)
+                }
+
+                layoutView?.run {
+                    return CustomDialog(context, 0, 0, layoutView, R.style.DialogTheme)
+                }
+
+            }
+            return null
         }
-        if (activity.isFinishing) {
-            return this
-        }
-        val dialog = CustomDialog(activity, 0, 0, contentView, R.style.DialogTheme)
-        dialog.show()
-        //获得dialog所在的窗体对象
-        val window = dialog.window
-        //得到参数
-        val params = window!!.attributes
-        //动态设置dialog的宽度为屏幕宽度的3/4
-        //默认的width为屏幕宽度的四分之三
+    }
+
+    fun show(): DialogManager {
+
+        if (this.dialog == null) {
+            var activity = mContext as Activity
+            if (activity.parent != null) {
+                activity = activity.parent
+            }
+            if (activity.isFinishing) {
+                return this
+            }
+            val dialog = CustomDialog(activity, 0, 0, contentView, R.style.DialogTheme)
+            dialog.show()
+            //获得dialog所在的窗体对象
+            val window = dialog.window
+            //得到参数
+            val params = window!!.attributes
+            //动态设置dialog的宽度为屏幕宽度的3/4
+            //默认的width为屏幕宽度的四分之三
 //        if (width == 0) {
 //            width = mContext.getResources().displayMetrics.widthPixels * 4 / 5
 //        }
-        params.width = WindowManager.LayoutParams.WRAP_CONTENT
-        params.height = WindowManager.LayoutParams.WRAP_CONTENT
-        //把设置好的参数重新设置给dialog
-        window.attributes = params
-        window.setContentView(contentView)
-
-
-        this.dialog = dialog
+            params.width = WindowManager.LayoutParams.WRAP_CONTENT
+            params.height = WindowManager.LayoutParams.WRAP_CONTENT
+            //把设置好的参数重新设置给dialog
+            window.attributes = params
+            window.setContentView(contentView)
+            this.dialog = dialog
+        }else {
+            this.dialog?.show()
+        }
         return this
     }
 
@@ -75,7 +103,7 @@ class DialogManager private constructor(builder: Builder) {
     }
 
 
-    class Builder(internal var context: Context) {
+    class Builder(var context: Context) {
         var contentView: View? = null
         var title: String? = null
         var width: Int = 0
@@ -152,11 +180,5 @@ class DialogManager private constructor(builder: Builder) {
             return DialogManager(this)
         }
     }
-
-    companion object {
-
-        private val instance: DialogManager? = null
-    }
-
 
 }

@@ -128,4 +128,7 @@ dependencies {
     //recyclerview适配器
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.26'
 
+    compile 'me.yokeyword:fragmentation:1.1.6'
+    compile 'me.yokeyword:fragmentation-swipeback:1.1.6'
+
 }

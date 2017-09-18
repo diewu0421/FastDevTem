@@ -1,10 +1,14 @@
 package com.epro.fastdevtem.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import com.epro.fastdevtem.BuildConfig
 
@@ -18,7 +22,7 @@ import com.zlw.devlib.utils.getStatusHeight
 import com.zlw.devlib.utils.setTranslucentState
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,13 +32,17 @@ class MainActivity : AppCompatActivity() {
         statu_view.layoutParams.height = getStatusHeight(this)//获取状态栏的高度
         statu_view.requestLayout()
 
+
+        //添加Fragment
+
+
         //测试对话框能不能用
         //        LoadingUtils.INSTANCE.createLoadingDialog(this, "正在加载中...");
         //        new DialogManager.Builder(this)
         //                .setContentView(R.layout.dialog_loading)
         //                .setText(R.id.tipTextView, "正在加载中...")
         //                .build()
-        //                .showDialog();
+        //                .show();
     }
 
     var count = 0
