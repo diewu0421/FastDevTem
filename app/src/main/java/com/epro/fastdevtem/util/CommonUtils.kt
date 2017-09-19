@@ -123,5 +123,3 @@ fun getStatusHeight(context: Context):Int {
     }
     return result
 }
-
-

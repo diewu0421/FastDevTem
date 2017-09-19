@@ -10,7 +10,7 @@ import com.orhanobut.logger.PrettyFormatStrategy
 /**
  * Created by ZLW on 2017/9/12.
  */
-class MApplication : Application(){
+class MApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         //初始化log
@@ -24,7 +24,7 @@ class MApplication : Application(){
         if (id != 0) {
             val inputStream = resources.openRawResource(id)
             CommonConfig.init(inputStream)
-        }else {
+        } else {
             Logger.e(resources.getString(R.string.init_config_error))
         }
     }
@@ -41,9 +41,10 @@ class MApplication : Application(){
         Logger.addLogAdapter(object : AndroidLogAdapter(formatStrategy) {
 
             override fun isLoggable(priority: Int, tag: String?): Boolean {
-                Log.e("MApplication","${BuildConfig.DEBUG}")
+                Log.e("MApplication", "${BuildConfig.DEBUG}")
                 return BuildConfig.DEBUG
             }
         })
     }
+
 }

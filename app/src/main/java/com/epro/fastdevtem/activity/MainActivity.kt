@@ -13,7 +13,6 @@ import com.epro.fastdevtem.constant.BASE_URL
 import com.epro.fastdevtem.util.CommonConfig
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
-import com.zlw.devlib.utils.getScreenSize
 import com.zlw.devlib.utils.getStatusHeight
 import com.zlw.devlib.utils.setTranslucentState
 import kotlinx.android.synthetic.main.activity_main.*

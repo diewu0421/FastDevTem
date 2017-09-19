@@ -109,7 +109,6 @@ dependencies {
     })
     compile "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
 
-    testCompile 'junit:junit:4.12'
     //for JVM
     compile 'com.github.kittinunf.fuel:fuel:1.10.0'
     //for Android
@@ -127,5 +126,8 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.1.1'
     //recyclerview适配器
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.26'
+
+    compile 'me.yokeyword:fragmentation:1.1.6'
+    compile 'me.yokeyword:fragmentation-swipeback:1.1.6'
 
 }
