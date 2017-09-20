@@ -14,7 +14,7 @@ class LoginPresenter : BasePresenterImpl<LoginContract.View>(), LoginContract.Pr
 //            view.getHandler()?.post { view.showData() }
 
 //            view.invokeByHandler<LoginContract.View>(view::showData)
-            view.invokeInHandler { showData() }
+//            view.invokeInHandler { showData() }
         }
     }
 }

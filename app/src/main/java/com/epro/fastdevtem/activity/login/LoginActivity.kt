@@ -9,6 +9,9 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 
 class LoginActivity : BaseActivity<LoginContract.View, LoginPresenter>(), LoginContract.View {
+    override fun showData(result: String) {
+    }
+
     override val layoutId: Int = R.layout.activity_login
 
     override fun init() {
@@ -27,9 +30,4 @@ class LoginActivity : BaseActivity<LoginContract.View, LoginPresenter>(), LoginC
         }
     }
 
-    override fun showData() {
-        toast("加载数据完成")
-        hideLoadingDialog()
-        Log.e("LoginActivity","加载数据完成")
-    }
 }
