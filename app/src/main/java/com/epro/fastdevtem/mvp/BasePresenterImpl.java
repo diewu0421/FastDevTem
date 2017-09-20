@@ -4,9 +4,9 @@ package com.epro.fastdevtem.mvp;
 import java.lang.ref.WeakReference;
 
 public class BasePresenterImpl<V extends BaseView> implements BasePresenter<V>{
-    protected V mView;
+    private V mView;
 
-    protected WeakReference<V> reference;
+    private WeakReference<V> reference;
 
     @Override
     public void attachView(V view) {

@@ -3,7 +3,6 @@ package com.epro.fastdevtem.util
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
-import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
 import android.view.LayoutInflater
 import android.view.View

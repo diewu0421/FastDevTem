@@ -1,6 +1,5 @@
 package com.epro.fastdevtem.util
 
-import android.util.Property
 import java.io.InputStream
 import java.util.*
 

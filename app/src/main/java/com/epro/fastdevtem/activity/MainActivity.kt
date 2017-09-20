@@ -1,14 +1,10 @@
 package com.epro.fastdevtem.activity
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import com.epro.fastdevtem.BuildConfig
 
@@ -17,12 +13,11 @@ import com.epro.fastdevtem.constant.BASE_URL
 import com.epro.fastdevtem.util.CommonConfig
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
-import com.zlw.devlib.utils.getScreenSize
 import com.zlw.devlib.utils.getStatusHeight
 import com.zlw.devlib.utils.setTranslucentState
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : Activity() {
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,17 +27,13 @@ class MainActivity : Activity() {
         statu_view.layoutParams.height = getStatusHeight(this)//获取状态栏的高度
         statu_view.requestLayout()
 
-
-        //添加Fragment
-
-
         //测试对话框能不能用
         //        LoadingUtils.INSTANCE.createLoadingDialog(this, "正在加载中...");
         //        new DialogManager.Builder(this)
         //                .setContentView(R.layout.dialog_loading)
         //                .setText(R.id.tipTextView, "正在加载中...")
         //                .build()
-        //                .show();
+        //                .showDialog();
     }
 
     var count = 0
@@ -53,6 +44,8 @@ class MainActivity : Activity() {
 //        Logger.e("x " + getScreenSize(this).x + " y = " + getScreenSize(this).y)
 
         Log.e("MainActivity", BASE_URL)
+        Logger.e("nihao", "asdfas")
+
         Logger.e("$BASE_URL $count++ ${BuildConfig.DEBUG}")
     }
 }
