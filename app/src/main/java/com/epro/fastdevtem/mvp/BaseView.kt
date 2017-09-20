@@ -9,3 +9,12 @@ interface BaseView {
 }
 
 fun BaseView.getHandler() = (context as? BaseActivity<*,*>)?.mBaseHandler
+
+public inline fun <T> T.invokeInHandler(crossinline block: T.() -> Unit)
+        = (this as? BaseView)?.getHandler()?.post { block() }
+//{
+//
+//    if (this is BaseView) {
+//        getHandler()?.post{block()}
+//    }
+//}
