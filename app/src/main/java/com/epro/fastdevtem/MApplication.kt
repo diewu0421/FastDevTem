@@ -32,7 +32,6 @@ class MApplication : Application(){
         Logger.addLogAdapter(object : AndroidLogAdapter() {
 
             override fun isLoggable(priority: Int, tag: String?): Boolean {
-                Log.e("MApplication","${BuildConfig.DEBUG}")
                 return BuildConfig.DEBUG
             }
         })

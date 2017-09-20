@@ -131,4 +131,7 @@ dependencies {
     compile 'me.yokeyword:fragmentation:1.1.6'
     compile 'me.yokeyword:fragmentation-swipeback:1.1.6'
 
+//    地址选择
+    compile 'com.github.chihane:JDAddressSelector:1.1.4'
+
 }

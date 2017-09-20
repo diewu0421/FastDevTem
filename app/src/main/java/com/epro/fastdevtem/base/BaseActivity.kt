@@ -52,8 +52,8 @@ abstract class BaseActivity<V : BaseView, T : BasePresenterImpl<V>> : MVPBaseAct
     }
 
     fun hideLoadingDialog(){
-        if (dialog?.isShowing == false) {
-            dialog?.show()
+        if (dialog?.isShowing == true) {
+            dialog?.hide()
         }
     }
 
@@ -64,4 +64,5 @@ abstract class BaseActivity<V : BaseView, T : BasePresenterImpl<V>> : MVPBaseAct
 //                .build()
         DialogManager.createDialog(this,R.layout.dialog_loading)
     }
+
 }

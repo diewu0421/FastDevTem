@@ -8,10 +8,11 @@ import com.epro.fastdevtem.mvp.BaseView
 
 class LoginContract {
     interface View : BaseView {
-        fun showData()
+        fun showData(result:String)
     }
 
     interface Presenter : BasePresenter<View> {
         fun loadData()
     }
 }
+
