@@ -19,11 +19,3 @@ inline fun <T> T.asType(block: T.(BaseActivity<*,*>) -> Unit) {
         block(this)
     }
 }
-
-
-//{
-//
-//    if (this is BaseView) {
-//        getHandler()?.post{block()}
-//    }
-//}
