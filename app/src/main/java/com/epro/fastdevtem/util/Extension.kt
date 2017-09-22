@@ -37,7 +37,7 @@ class PlusHashMap(val map: HashMap<String, Any?>) : MutableMap<String, Any?> by 
 fun Disposable.add2DisposableList() = FuelUtil.disposableList.add(this)
 
 @JvmOverloads
-fun <T> BaseView.doPost(url: String, params: List<Pair<String, Any?>>? = null, type:Class<T>? = null,
+fun <T> BaseView.doPost(url: String, params: List<Pair<String, Any?>>? = null, type: Class<T>? = null,
                         doOnSubscribe: (() -> Unit)? = null,
                         doAfterSuccess: (() -> Unit)? = null,
                         action: ((T?, Pair<Response, Result<String, FuelError>>?) -> Unit)? = null) {
@@ -45,18 +45,20 @@ fun <T> BaseView.doPost(url: String, params: List<Pair<String, Any?>>? = null, t
             .timeout(FuelUtil.TIME_OUT)
             .timeoutRead(FuelUtil.TIME_OUT)
             .rx_responseString()
+            .doOnSubscribe {
+                //子线程 做准备工作 防止阻塞UI线程
+            }
             .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe{
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe {
+                // 主线程的准备工作 有些ui的操作需要在主线程操作
                 this.asType { it.showLoadingDialog() }
                 doOnSubscribe?.invoke()
             }
             .doAfterSuccess { t: Pair<Response, Result<String, FuelError>>? ->
                 this.asType { it.dismissLoadingDialog() }
-
                 doAfterSuccess?.invoke()
             }
-            .observeOn(AndroidSchedulers.mainThread())
             .subscribe { t1: Pair<Response, Result<String, FuelError>>?, t2: Throwable? ->
 
                 t2?.run {
@@ -68,10 +70,10 @@ fun <T> BaseView.doPost(url: String, params: List<Pair<String, Any?>>? = null, t
                 Logger.e("doPost 成功\n" + t1.toString())
                 val resultString = t1?.component2()?.component1()
 
-                if (type == null){
+                if (type == null) {
                     action?.invoke(resultString as? T, t1)
-                }else {
-                    action?.invoke(type.run { Gson().fromJson(resultString,this) }, t1)
+                } else {
+                    action?.invoke(type.run { Gson().fromJson(resultString, this) }, t1)
                 }
 
             }
