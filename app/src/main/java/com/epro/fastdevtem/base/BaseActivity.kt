@@ -12,6 +12,7 @@ import com.epro.fastdevtem.mvp.BasePresenterImpl
 import com.epro.fastdevtem.mvp.BaseView
 import com.epro.fastdevtem.mvp.MVPBaseActivity
 import com.epro.fastdevtem.util.DialogManager
+import droidhao.clevercity.util.FuelUtil
 import java.lang.ref.WeakReference
 
 /**
@@ -63,9 +64,9 @@ abstract class BaseActivity<V : BaseView, T : BasePresenterImpl<V>> : MVPBaseAct
      * 隐藏加载对话框，如需显示
      * @see BaseActivity.showLoadingDialog
      */
-    fun hideLoadingDialog(){
+    fun dismissLoadingDialog(){
         if (dialog?.isShowing == true) {
-            dialog?.hide()
+            dialog?.dismiss()
         }
     }
 
@@ -90,5 +91,10 @@ abstract class BaseActivity<V : BaseView, T : BasePresenterImpl<V>> : MVPBaseAct
     }
 
     var mBaseHandler:BaseHandler? = null
+
+    override fun onDestroy() {
+        super.onDestroy()
+        FuelUtil.cancelAll()
+    }
 
 }

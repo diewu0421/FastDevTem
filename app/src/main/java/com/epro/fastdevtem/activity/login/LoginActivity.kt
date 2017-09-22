@@ -29,7 +29,7 @@ class LoginActivity : BaseActivity<LoginContract.View, LoginPresenter>(), LoginC
 
     override fun showData() {
         toast("加载数据完成")
-        hideLoadingDialog()
+        dismissLoadingDialog()
         Log.e("LoginActivity","加载数据完成")
     }
 }
