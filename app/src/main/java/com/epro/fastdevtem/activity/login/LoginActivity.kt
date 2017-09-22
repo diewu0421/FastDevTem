@@ -5,10 +5,17 @@ import android.util.Log
 import android.view.View
 import com.epro.fastdevtem.R
 import com.epro.fastdevtem.base.BaseActivity
+import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_login.*
 
 
 class LoginActivity : BaseActivity<LoginContract.View, LoginPresenter>(), LoginContract.View {
+    override fun showData(result: String) {
+        toast("加载数据完成")
+        dismissLoadingDialog()
+        Logger.e("result = \n" + result)
+    }
+
     override val layoutId: Int = R.layout.activity_login
 
     override fun init() {
@@ -27,9 +34,4 @@ class LoginActivity : BaseActivity<LoginContract.View, LoginPresenter>(), LoginC
         }
     }
 
-    override fun showData() {
-        toast("加载数据完成")
-        dismissLoadingDialog()
-        Log.e("LoginActivity","加载数据完成")
-    }
 }

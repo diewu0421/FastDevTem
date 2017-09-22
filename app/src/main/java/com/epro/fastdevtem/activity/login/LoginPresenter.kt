@@ -59,10 +59,8 @@ class LoginPresenter : BasePresenterImpl<LoginContract.View>(), LoginContract.Pr
 
                 this.doPost("index.php/api/Cart/cart2.html"){
                     s: String?, pair: Pair<Response, Result<String, FuelError>>? ->
-
+                    this.showData(s?:"")
                 }
-
-
 
             }
         }
