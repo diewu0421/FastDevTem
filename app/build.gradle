@@ -64,6 +64,7 @@ android {
 //        manifest.srcFile 'AndroidManifest.xml'
             jniLibs.srcDirs = ['libs']
             jni.srcDirs = []
+
         }
 
         // Move the tests to tests/java, tests/res, etc...
@@ -108,7 +109,6 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
-
     //for JVM
     compile 'com.github.kittinunf.fuel:fuel:1.10.0'
     //for Android
@@ -116,21 +116,23 @@ dependencies {
     //for RxJava support
     compile 'com.github.kittinunf.fuel:fuel-rxjava:1.10.0'
     //for Gson support
-    compile 'com.github.kittinunf.fuel:fuel-gson:1.10.0'
+//        compile 'com.github.kittinunf.fuel:fuel-gson:1.10.0'
     //Rxjava for Android
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     //log Utils
     compile 'com.orhanobut:logger:2.1.1'
-
+    //anko相关依赖
+    //协程依赖
+    compile "org.jetbrains.anko:anko-coroutines:$anko_version"
+    //anko————————dialog
+    compile "org.jetbrains.anko:anko-commons:$anko_version"
     compile 'com.github.bumptech.glide:glide:4.1.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.1.1'
     //recyclerview适配器
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.26'
-
     compile 'me.yokeyword:fragmentation:1.1.6'
     compile 'me.yokeyword:fragmentation-swipeback:1.1.6'
-
-//    地址选择
-    compile 'com.github.chihane:JDAddressSelector:1.1.4'
-
+    //    地址选择
+    //    compile 'com.github.chihane:JDAddressSelector:1.1.4'
+    compile files('libs/gson-2.8.2.jar')
 }

@@ -9,14 +9,10 @@ open class BasePresenterImpl<V : BaseView> : BasePresenter<V> {
     private var reference: WeakReference<V>? = null
 
     override fun attachView(view: V) {
-
-        //        mView=view;
         reference = WeakReference(view)
     }
 
     override fun detachView() {
-
-        //        mView=null;
         if (reference != null) {
             reference = null
         }

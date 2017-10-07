@@ -3,7 +3,7 @@ package com.epro.fastdevtem
 import android.app.Application
 import android.util.Log
 import com.epro.fastdevtem.util.CommonConfig
-import com.github.kittinunf.fuel.core.FuelManager
+import com.epro.fastdevtem.util.FuelTool
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
@@ -23,8 +23,8 @@ class MApplication : Application() {
 
     private fun initFuel() {
         //在这里初始化Fuel的属性
-        FuelManager.instance.basePath = "http://120.77.56.109/"
-
+//        FuelManager.instance.basePath = "http://120.77.56.109/"
+        FuelTool.init()
     }
 
     private fun initConfig() {

@@ -12,7 +12,7 @@ import com.epro.fastdevtem.mvp.BasePresenterImpl
 import com.epro.fastdevtem.mvp.BaseView
 import com.epro.fastdevtem.mvp.MVPBaseActivity
 import com.epro.fastdevtem.util.DialogManager
-import droidhao.clevercity.util.FuelUtil
+import com.epro.fastdevtem.util.FuelTool
 import java.lang.ref.WeakReference
 
 /**
@@ -71,12 +71,7 @@ abstract class BaseActivity<V : BaseView, T : BasePresenterImpl<V>> : MVPBaseAct
     }
 
     private val dialog:Dialog? by lazy {
-//        DialogManager.Builder(this)
-//                .setContentView(R.layout.dialog_loading)
-//                .setText(R.id.tipTextView, "正在加载中...")
-//                .build()
         DialogManager.createDialog(this,R.layout.dialog_loading)
-
     }
 
 
@@ -94,7 +89,7 @@ abstract class BaseActivity<V : BaseView, T : BasePresenterImpl<V>> : MVPBaseAct
 
     override fun onDestroy() {
         super.onDestroy()
-        FuelUtil.cancelAll()
+        FuelTool.cancelAll()
     }
 
 }

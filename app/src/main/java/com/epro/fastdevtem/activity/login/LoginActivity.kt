@@ -12,7 +12,6 @@ import kotlinx.android.synthetic.main.activity_login.*
 class LoginActivity : BaseActivity<LoginContract.View, LoginPresenter>(), LoginContract.View {
     override fun showData(result: String) {
         toast("加载数据完成")
-        dismissLoadingDialog()
         Logger.e("result = \n" + result)
     }
 
@@ -20,15 +19,12 @@ class LoginActivity : BaseActivity<LoginContract.View, LoginPresenter>(), LoginC
 
     override fun init() {
         registerClickEvent(registerClick,btn_login)
-
     }
 
     val registerClick:(view:View) ->Unit = {
         when (it.id) {
             R.id.btn_login -> {
                 Log.e("LoginActivity","开始加载数据")
-//                toast("开始加载数据")
-                showLoadingDialog()
                 mPresenter?.loadData()
             }
         }
