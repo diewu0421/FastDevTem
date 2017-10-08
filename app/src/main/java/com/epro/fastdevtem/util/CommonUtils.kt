@@ -1,4 +1,4 @@
-package com.zlw.devlib.utils
+package com.epro.fastdevtem.util
 
 import android.app.Activity
 import android.app.ActivityManager
@@ -122,4 +122,29 @@ fun getStatusHeight(context: Context):Int {
         result = context.resources.getDimensionPixelSize(resourceId)
     }
     return result
+}
+
+fun String.isValidate(content:String) = this == content
+
+/*************************************************************************************************************************************************************************************
+ * 判断栈顶是否是当前app
+ * @param context
+ * @return  [参数说明]
+ * @return boolean [返回类型说明]
+ * @exception throws [违例类型] [违例说明]
+ * @see [类、类.方法、类.成员]
+ */
+fun isAppOnForeground(context: Context?): Boolean {
+    if (null == context) {
+        return false
+    }
+    val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager ?: return false
+    val packageName = context.packageName
+    val appTask = activityManager.getRecentTasks(Integer.MAX_VALUE, 1)
+
+    if (appTask == null || appTask.size == 0) {
+        return false
+    }
+
+    return appTask[0].baseIntent.toString().contains(packageName)
 }

@@ -2,6 +2,7 @@ package com.epro.fastdevtem.activity.login
 
 import com.epro.fastdevtem.entity.ShipWayModel
 import com.epro.fastdevtem.mvp.BasePresenterImpl
+import com.epro.fastdevtem.util.asType
 import com.epro.fastdevtem.util.doRequest
 import com.github.kittinunf.fuel.core.FuelError
 import com.github.kittinunf.fuel.core.Response
@@ -13,12 +14,14 @@ class LoginPresenter : BasePresenterImpl<LoginContract.View>(), LoginContract.Pr
 
     override fun loadData() {
 
-        view?.doRequest("https://svcml01.dxqas.com/DMS/token/api/Products/GetShippingMethod?sku=1138&country=US",
-                cls = ShipWayModel::class.java,
-                headers = listOf("ShipTo" to "US")){
-            t: ShipWayModel?, _: Pair<Response, Result<String, FuelError>>? ->
-            Logger.e("shipWayModel  = " + t?.toString())
-
+        view?.asType {
+            doRequest("https://svcml01.dxqas.com/DMS/token/api/Products/GetShippingMethod?sku=1138&country=US",
+                    cls = ShipWayModel::class.java,
+                    headers = listOf("ShipTo" to "US")){
+                t: ShipWayModel?, _: Pair<Response, Result<String, FuelError>>? ->
+                Logger.e("shipWayModel  = " + t?.toString())
+                showData(t.toString())
+            }
         }
 
     }

@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 android {
 
     //自定义打包的名字
@@ -127,12 +128,15 @@ dependencies {
     //anko————————dialog
     compile "org.jetbrains.anko:anko-commons:$anko_version"
     compile 'com.github.bumptech.glide:glide:4.1.1'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.1.1'
+    kapt 'com.github.bumptech.glide:compiler:4.1.1'
     //recyclerview适配器
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.26'
     compile 'me.yokeyword:fragmentation:1.1.6'
     compile 'me.yokeyword:fragmentation-swipeback:1.1.6'
     //    地址选择
     //    compile 'com.github.chihane:JDAddressSelector:1.1.4'
+    // Data Binding 使用kapt，似的DataBinding支持Kotlin
+    kapt 'com.android.databinding:compiler:2.3.1'
+
     compile files('libs/gson-2.8.2.jar')
 }

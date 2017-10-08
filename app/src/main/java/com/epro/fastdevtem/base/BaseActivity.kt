@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import com.epro.fastdevtem.R
 import com.epro.fastdevtem.mvp.BasePresenterImpl
@@ -35,16 +36,26 @@ abstract class BaseActivity<V : BaseView, T : BasePresenterImpl<V>> : MVPBaseAct
     fun registerClickEvent(block: (View) -> Unit, vararg views: View)
             = views.forEach { it.setOnClickListener { block(it) } }
 
-    fun toast(message: String) {
+    fun toast(message: String, view: View? = null, anim: Int? = null) {
         if (message.isNotEmpty()) {
             if (mToast == null) {
-                mToast = Toast.makeText(this,message,Toast.LENGTH_SHORT).also { it.show() }
+                mToast = Toast.makeText(this, message, Toast.LENGTH_SHORT).also { it.show();makeAnimation(view, anim) }
                 return
             }
             mToast?.run {
                 cancel()
-                mToast = Toast.makeText(this@BaseActivity,message,Toast.LENGTH_SHORT).also { it.show() }
+                mToast = Toast.makeText(this@BaseActivity, message, Toast.LENGTH_SHORT).also { it.show();makeAnimation(view, anim) }
             }
+        }
+
+    }
+
+    /**
+     * 使某一个view做动画
+     */
+    private fun makeAnimation(view: View?, anim: Int?) {
+        if (view != null && anim != null) {
+            view.startAnimation(AnimationUtils.loadAnimation(this, anim))
         }
     }
 
@@ -72,6 +83,31 @@ abstract class BaseActivity<V : BaseView, T : BasePresenterImpl<V>> : MVPBaseAct
 
     private val dialog:Dialog? by lazy {
         DialogManager.createDialog(this,R.layout.dialog_loading)
+    }
+
+    /***************************************************************************************************************************************************************************************************
+     * 设置按钮不可点击
+     */
+    fun setButtonState(view: View, state: Int) {
+        when (state) {
+            1 -> {
+                view.run {
+                    //设置按钮可点击的状态
+//                    setBackgroundResource(R.drawable.bt_red_shape)
+                    isEnabled = true
+                }
+
+            }
+
+            2 -> {
+                view.run {
+                    //设置按钮为不可点击的状态
+                    setBackgroundColor(resources.getColor(android.R.color.darker_gray))
+                    isEnabled = false
+
+                }
+            }
+        }
     }
 
 

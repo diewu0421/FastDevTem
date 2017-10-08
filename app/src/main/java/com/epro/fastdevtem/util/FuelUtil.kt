@@ -2,15 +2,8 @@
 
 package com.epro.fastdevtem.util
 import com.epro.fastdevtem.request.SSLSocketFactoryEx
-import com.github.kittinunf.fuel.Fuel
-import com.github.kittinunf.fuel.core.FuelError
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.core.Request
-import com.github.kittinunf.fuel.core.Response
-import com.github.kittinunf.result.Result
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import com.orhanobut.logger.Logger
 import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
@@ -67,59 +60,7 @@ object FuelTool {
     }
 
     /*****************************************************************************************************************************/
-    @JvmOverloads
-    fun <T> doSyncRequest(url: String,
-                          method: FuelMethod = FuelMethod.GET,
-                          params: List<Pair<String, Any?>>? = null,
-                          headers: List<Pair<String, Any>?>? = null,
-                          requestBody: Any? = null,
-                          tranformModel: Boolean = true,
-                          action: ((T?, Pair<Response, Result<String, FuelError>>?) -> Unit)? = null): T? {
-        val request = when (method) {
-            FuelMethod.GET -> {
-                Fuel.get(url, params).timeout(TIME_OUT).timeoutRead(TIME_OUT).apply {
-                    headers?.forEach {
-                        header(it)
-                    }
-                }
-            }
 
-            FuelMethod.POST -> {
-                Fuel.post(url, params).timeout(TIME_OUT).timeoutRead(TIME_OUT).apply {
-                    headers?.forEach {
-                        header(it)
-                    }
-                    requestBody?.let {
-                        body(it.toString())
-                    }
-                }
-            }
-
-            FuelMethod.DELETE -> {
-            }
-
-            FuelMethod.PUT -> {
-
-            }
-        } as Request
-
-        val (requestResult: Request?, response: Response?, result: Result<String, FuelError>?)
-                = request?.run { request.responseString() }
-
-        Logger.e("requestResult = " + requestResult.toString() + "\nresponse = \n" + response.toString() + "\nresult = \n" + result.component1())
-
-        result?.component2()?.run {
-            return null
-        }
-
-        if (tranformModel){
-            return Gson().fromJson<T>(result?.component1(), object : TypeToken<T>() {}.type)
-        }else {
-            return result?.component1() as? T
-
-        }
-
-    }
 }
 
 /*****************************************************************************************************************************/
